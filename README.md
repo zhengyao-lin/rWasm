@@ -1,3 +1,5 @@
+A modified version to expose parser as a library.
+
 # rWasm
 
 A cross-platform high-performance provably-safe sandboxing

@@ -6,6 +6,19 @@ use std::convert::TryInto;
 
 type Parsed<'a, T> = crate::Maybe<(&'a [u8], T)>;
 
+macro_rules! dbgprintln {
+    ($level:literal, $($body:tt)*) => {
+        if dbg_print_level!() > $level {
+            eprintln!("DEBUG[{}] {}", $level, format_args!($($body)*));
+        }
+    };
+}
+macro_rules! dbg_print_level {
+    () => {
+        crate::DEBUG_PRINT_LEVEL.load(std::sync::atomic::Ordering::Relaxed)
+    };
+}
+
 macro_rules! trace {
     ($($body:tt)*) => {
         dbgprintln!(3, $($body)*)
