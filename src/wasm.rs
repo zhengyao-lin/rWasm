@@ -33,26 +33,34 @@ pub mod syntax {
             }
         }
 
+        #[derive(Debug)]
         pub struct ResultType(pub Vec<ValType>);
 
+        #[derive(Debug)]
         pub struct FuncType {
             pub from: ResultType,
             pub to: ResultType,
         }
 
+        #[derive(Debug)]
         pub struct Limits {
             pub min: u32,
             pub max: Option<u32>,
         }
 
+        #[derive(Debug)]
         pub struct MemType(pub Limits);
 
+        #[derive(Debug)]
         pub struct TableType(pub Limits, pub ElemType);
+
+        #[derive(Debug)]
         pub enum ElemType {
             // XXX
             FuncRef,
         }
 
+        #[derive(Debug)]
         pub struct GlobalType(pub Mut, pub ValType);
         #[derive(Copy, Clone, Debug, PartialEq, Eq)]
         pub enum Mut {
@@ -298,6 +306,7 @@ pub mod syntax {
         use super::types::*;
         use super::values::*;
 
+        #[derive(Debug)]
         pub struct Module {
             pub types: Vec<FuncType>,
             pub funcs: Vec<Func>,
@@ -312,55 +321,67 @@ pub mod syntax {
             pub names: Names, // non-standard custom section that appears in WASI
         }
 
+        #[derive(Debug)]
         pub struct Names {
             pub module: Option<Name>,
             pub functions: std::collections::HashMap<FuncIdx, Name>,
             pub locals: std::collections::HashMap<FuncIdx, Vec<Name>>,
         }
 
+        #[derive(Debug)]
         pub enum FuncInternals {
             LocalFunc { locals: Vec<ValType>, body: Expr },
             ImportedFunc { module: Name, name: Name },
         }
 
+        #[derive(Debug)]
         pub struct Func {
             pub typ: TypeIdx,
             pub internals: FuncInternals,
         }
 
+        #[derive(Debug)]
         pub struct Table {
             pub typ: TableType,
         }
 
+        #[derive(Debug)]
         pub struct Mem {
             pub typ: MemType,
         }
 
+        #[derive(Debug)]
         pub struct Global {
             pub typ: GlobalType,
             pub init: Expr,
         }
 
+        #[derive(Debug)]
         pub struct Elem {
             pub table: TableIdx,
             pub offset: Expr,
             pub init: Vec<FuncIdx>,
         }
 
+        #[derive(Debug)]
         pub struct Data {
             pub data: MemIdx,
             pub offset: Expr,
             pub init: Vec<Byte>,
         }
 
+        #[derive(Debug)]
         pub struct Start {
             pub func: FuncIdx,
         }
 
+        #[derive(Debug)]
         pub struct Export {
             pub name: Name,
             pub desc: ExportDesc,
         }
+
+        #[derive(Debug)]
         pub enum ExportDesc {
             Func(FuncIdx),
             Table(TableIdx),
@@ -368,11 +389,14 @@ pub mod syntax {
             Global(GlobalIdx),
         }
 
+        #[derive(Debug)]
         pub struct Import {
             pub module: Name,
             pub name: Name,
             pub desc: ImportDesc,
         }
+
+        #[derive(Debug)]
         pub enum ImportDesc {
             Func(TypeIdx),
             Table(TableType),
